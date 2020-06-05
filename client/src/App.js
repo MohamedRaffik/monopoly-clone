@@ -1,10 +1,15 @@
-import React from 'react';
-import './App.css';
+import React, { useMemo } from 'react';
 
 function App() {
+  const ws = useMemo(() => new WebSocket('ws://localhost:8000/ws'), []);
+
+  ws.onopen = () => {
+    setInterval(() => ws.send(JSON.stringify({ 'message': 'HELLOO' })), 1000);
+  };
+
   return (
-    <div className="App">
-      HELLO
+    <div>
+      
     </div>
   );
 }
