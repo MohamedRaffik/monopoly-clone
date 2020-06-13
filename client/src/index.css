@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Monopoly';
+  src: url('./fonts/MONOPOLY_INLINE.ttf') format('truetype');
+}
+
+* {
+  font-family: 'Monopoly';
+  margin: 0;
+  padding: 0;
+}
