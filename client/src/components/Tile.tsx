@@ -47,8 +47,8 @@ export const Tile = (props: TileProps) => {
 interface PropertyTileProps {
   x: string | number;
   y: string | number;
-  color: string;
-  propertyName: string;
+  color?: string;
+  propertyName?: string;
 }
 
 export const PropertyTile = (props: PropertyTileProps) => {
@@ -69,7 +69,7 @@ export const PropertyTile = (props: PropertyTileProps) => {
       <rect style={RotateStyle} x={0} y={0} width={Width} height={Height * .2} fill={props.color} />
       <text style={RotateStyle}>
       {
-        props.propertyName.toLocaleUpperCase().split(' ').map((string, index) => (
+        (props.propertyName || '').toLocaleUpperCase().split(' ').map((string, index) => (
           <tspan key={string} x={Width * .5} y={(Height * .35) + (Height * index * .10)} textAnchor={'middle'} fontSize={'70%'}>{string}</tspan>
         ))
       }
@@ -82,8 +82,8 @@ export const PropertyTile = (props: PropertyTileProps) => {
 interface RailRoadTileProps {
   x: string | number;
   y: string | number;
-  direction: 'N' | 'E' | 'W' | 'S';
-  railroadName: string;
+  direction?: Direction;
+  railroadName?: string;
 }
 
 export const RailRoadTile = (props: RailRoadTileProps) => {
@@ -103,7 +103,7 @@ export const RailRoadTile = (props: RailRoadTileProps) => {
     <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment}>
       <text style={RotateStyle}>
         {
-          props.railroadName.split(' ').map((string, index) => (
+          (props.railroadName || '').split(' ').map((string, index) => (
             <tspan key={string} x={Width * .5} y={(Height * .15) + (Height * index * .10)} textAnchor={'middle'} fontSize={'70%'}>{string}</tspan>
           ))
         }
@@ -117,9 +117,9 @@ export const RailRoadTile = (props: RailRoadTileProps) => {
 interface UtilityTileProps {
   x: string | number;
   y: string | number;
-  direction: 'N' | 'E' | 'W' | 'S';
-  utilityName: string;
-  image: number;
+  direction?: Direction;
+  utilityName?: string;
+  image?: number;
 }
 
 export const UtilityTile = (props: UtilityTileProps) => {
@@ -139,12 +139,12 @@ export const UtilityTile = (props: UtilityTileProps) => {
     <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment}>
       <text style={RotateStyle}>
         {
-          props.utilityName.toLocaleUpperCase().split(' ').map((string, index) => (
+          (props.utilityName || '').toLocaleUpperCase().split(' ').map((string, index) => (
             <tspan key={string} x={Width * .5} y={(Height * .15) + (Height * index * .10)} textAnchor={'middle'} fontSize={'70%'}>{string}</tspan>
           ))
         }
       </text>
-      <text x={Width * .5} y={Height * .65} style={RotateStyle} textAnchor={'middle'} fontSize={'250%'}>{String.fromCodePoint(props.image)}</text>
+      <text x={Width * .5} y={Height * .65} style={RotateStyle} textAnchor={'middle'} fontSize={'250%'}>{String.fromCodePoint(props.image || 0)}</text>
       <text style={RotateStyle} x={Width * .5} y={Height * .9} textAnchor={'middle'} fontSize={'70%'}>{'$ 100'.toLocaleUpperCase()}</text>
     </Tile>
   );
@@ -153,7 +153,7 @@ export const UtilityTile = (props: UtilityTileProps) => {
 interface ChanceTileProps {
   x: string | number;
   y: string | number;
-  direction: 'N' | 'E' | 'S';
+  direction?: Direction;
 }
 
 export const ChanceTile = (props: ChanceTileProps) => {
@@ -180,7 +180,7 @@ export const ChanceTile = (props: ChanceTileProps) => {
 interface CommunityChestTileProps {
   x: string | number;
   y: string | number;
-  direction: 'W' | 'S' | 'E';
+  direction?: Direction;
 }
 
 export const CommunityChestTile = (props: CommunityChestTileProps) => {
@@ -213,9 +213,9 @@ export const CommunityChestTile = (props: CommunityChestTileProps) => {
 interface TaxTileProps {
   x: string | number;
   y: string | number;
-  direction: 'N' | 'E' | 'W' | 'S';
-  taxName: string;
-  image: number;
+  direction?: Direction;
+  taxName?: string;
+  image?: number;
 }
 
 export const TaxTile = (props: TaxTileProps) => {
@@ -240,7 +240,7 @@ export const TaxTile = (props: TaxTileProps) => {
           ))
         }
       </text>
-      <text x={Width * .5} y={Height * .65} style={RotateStyle} textAnchor={'middle'} fontSize={'250%'}>{String.fromCodePoint(props.image)}</text>
+      <text x={Width * .5} y={Height * .65} style={RotateStyle} textAnchor={'middle'} fontSize={'250%'}>{String.fromCodePoint(props.image || 0)}</text>
       <text style={RotateStyle} x={Width * .5} y={Height * .9} textAnchor={'middle'} fontSize={'70%'}>{'$ 100'.toLocaleUpperCase()}</text>
     </Tile>
   );
