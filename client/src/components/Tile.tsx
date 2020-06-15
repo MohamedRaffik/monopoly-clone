@@ -17,14 +17,19 @@ const calcRotation = (array: any[], value: any, alignment?: 'horizontal' | 'vert
 };
 
 interface TileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
   children?: JSX.Element[] | JSX.Element | string;
   tileType: 'normal' | 'corner';
   alignment: 'vertical' | 'horizontal';
 }
 
 export const Tile = (props: TileProps) => {
+  const { Players } = useSelector((state: State) => ({
+    Players: state.Players
+  }));
+
   let { Width, Height } = useSelector((state: State) => ({
     Width: props.tileType === 'corner' ? state.Height : state.Width,
     Height: state.Height
@@ -34,20 +39,30 @@ export const Tile = (props: TileProps) => {
     [Width, Height] = [Height, Width];
   }
 
+  const PlayerTokens = Players.map((tile, index) => {
+    if (tile === props.tileID) {
+      return (
+        <rect id={`player${index + 1}`} x={`${(10 * (index + 1))}%`} y={'55%'} width={'5%'} height={'5%'} fill={'red'} />
+      );
+    }
+  });
+
   return (
     <svg width={Width} height={Height} stroke={'black'} x={props.x} y={props.y}>
       <g>
         <rect x={0} y={0} width={'100%'} height={'100%'} fill={'#CCFFCC'} stroke={'black'} />
-        {props.children}
+        { props.children }
+        { PlayerTokens }
       </g>
     </svg>
   );
 };
 
 interface PropertyTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
   color?: string;
+  tileID: number;
   propertyName?: string;
 }
 
@@ -65,7 +80,7 @@ export const PropertyTile = (props: PropertyTileProps) => {
   }, [props.color, alignment]);
 
   return (
-    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment}>
+    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment} tileID={props.tileID}>
       <rect style={RotateStyle} x={0} y={0} width={Width} height={Height * .2} fill={props.color} />
       <text style={RotateStyle}>
       {
@@ -80,8 +95,9 @@ export const PropertyTile = (props: PropertyTileProps) => {
 };
 
 interface RailRoadTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
   direction?: Direction;
   railroadName?: string;
 }
@@ -100,7 +116,7 @@ export const RailRoadTile = (props: RailRoadTileProps) => {
   }, [props.direction, alignment]);
 
   return (
-    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment}>
+    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment} tileID={props.tileID}>
       <text style={RotateStyle}>
         {
           (props.railroadName || '').split(' ').map((string, index) => (
@@ -115,8 +131,9 @@ export const RailRoadTile = (props: RailRoadTileProps) => {
 };
 
 interface UtilityTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
   direction?: Direction;
   utilityName?: string;
   image?: number;
@@ -136,7 +153,7 @@ export const UtilityTile = (props: UtilityTileProps) => {
   }, [props.direction, alignment]);
 
   return (
-    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment}>
+    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment} tileID={props.tileID}>
       <text style={RotateStyle}>
         {
           (props.utilityName || '').toLocaleUpperCase().split(' ').map((string, index) => (
@@ -151,8 +168,9 @@ export const UtilityTile = (props: UtilityTileProps) => {
 };
 
 interface ChanceTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
   direction?: Direction;
 }
 
@@ -170,7 +188,7 @@ export const ChanceTile = (props: ChanceTileProps) => {
   }, [props.direction, alignment]);
   
   return (
-    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment}>
+    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment} tileID={props.tileID}>
       <text style={RotateStyle} x={Width * .5} y={Height * .2} textAnchor={'middle'}>CHANCE</text>
       <text style={RotateStyle} x={Width * .5} y={Height * .8} fontSize={'500%'} textAnchor={'middle'}>?</text>
     </Tile>
@@ -178,8 +196,9 @@ export const ChanceTile = (props: ChanceTileProps) => {
 };
 
 interface CommunityChestTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
   direction?: Direction;
 }
 
@@ -197,7 +216,7 @@ export const CommunityChestTile = (props: CommunityChestTileProps) => {
   }, [props.direction, alignment]);
 
   return (
-    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment}>
+    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment} tileID={props.tileID}>
       <text style={RotateStyle}>
         {
           'COMMUNITY CHEST'.split(' ').map((string, index) => (
@@ -211,8 +230,9 @@ export const CommunityChestTile = (props: CommunityChestTileProps) => {
 };
 
 interface TaxTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
   direction?: Direction;
   taxName?: string;
   image?: number;
@@ -232,7 +252,7 @@ export const TaxTile = (props: TaxTileProps) => {
   }, [props.direction, alignment]);
   
   return (
-    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment}>
+    <Tile x={props.x} y={props.y} tileType={'normal'} alignment={alignment} tileID={props.tileID}>
       <text style={RotateStyle}>
         {
           (props.taxName + ' tax').toLocaleUpperCase().split(' ').map((string, index) => (
@@ -247,8 +267,9 @@ export const TaxTile = (props: TaxTileProps) => {
 };
 
 interface FreeParkingTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
 }
 
 export const FreeParkingTile = (props: FreeParkingTileProps) => {
@@ -258,7 +279,7 @@ export const FreeParkingTile = (props: FreeParkingTileProps) => {
   }));
 
   return (
-    <Tile x={props.x} y={props.y} tileType={'corner'} alignment={'horizontal'}>
+    <Tile x={props.x} y={props.y} tileType={'corner'} alignment={'horizontal'} tileID={props.tileID}>
       <text x={Width * .5} y={Height * .2} textAnchor={'middle'}>FREE</text>
       <text x={Width * .5} y={Height * .6} fontSize={'400%'} textAnchor={'middle'}>&#128664;</text>
       <text x={Width * .5} y={Height * .8} textAnchor={'middle'}>PARKING</text>
@@ -267,8 +288,9 @@ export const FreeParkingTile = (props: FreeParkingTileProps) => {
 };
 
 interface GoToJailTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
 }
 
 export const GoToJailTile = (props: GoToJailTileProps) => {
@@ -278,7 +300,7 @@ export const GoToJailTile = (props: GoToJailTileProps) => {
   }));
 
   return (
-    <Tile x={props.x} y={props.y} tileType={'corner'} alignment={'horizontal'}>
+    <Tile x={props.x} y={props.y} tileType={'corner'} alignment={'horizontal'} tileID={props.tileID}>
       <text x={Width * .5} y={Height * .2} textAnchor={'middle'}>GO TO</text>
       <text x={Width * .5} y={Height * .6} fontSize={'300%'} textAnchor={'middle'}>	&#128110;</text>
       <text x={Width * .5} y={Height * .9} textAnchor={'middle'}>JAIL</text>
@@ -287,8 +309,9 @@ export const GoToJailTile = (props: GoToJailTileProps) => {
 };
 
 interface GoTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
 }
 
 export const GoTile = (props: GoTileProps) => {
@@ -298,7 +321,7 @@ export const GoTile = (props: GoTileProps) => {
   }));
 
   return (
-    <Tile x={props.x} y={props.y} tileType={'corner'} alignment={'vertical'}>
+    <Tile x={props.x} y={props.y} tileType={'corner'} alignment={'vertical'} tileID={props.tileID}>
       <text x={Width * .5} y={Height * .2} textAnchor={'middle'}>COLLECT $ 200</text>
       <text x={Width * .5} y={Height * .6} textAnchor={'middle'} fontSize={'400%'}>GO</text>
       <text x={Width * .5} y={Height * .9} textAnchor={'middle'} fontSize={'600%'}>&#8592;</text>
@@ -307,13 +330,14 @@ export const GoTile = (props: GoTileProps) => {
 };
 
 interface JailTileProps {
-  x: string | number;
-  y: string | number;
+  x: number;
+  y: number;
+  tileID: number;
 }
 
 export const JailTile = (props: JailTileProps) => {
   return (
-    <Tile x={props.x} y={props.y} tileType={'corner'} alignment={'vertical'}>
+    <Tile x={props.x} y={props.y} tileType={'corner'} alignment={'vertical'} tileID={props.tileID}>
       <text x={'50%'} y={'20%'} textAnchor={'middle'}>JAIL</text>
     </Tile>
   );

@@ -5,9 +5,7 @@ const initialState = {
   Size: window.innerHeight,
   Width: window.innerHeight * .082,
   Height: window.innerHeight * .13,
-  Players : [ 
-    { x: window.innerHeight * .13 + 9.05 * window.innerHeight * .082, y: window.innerHeight * .95 } 
-  ],
+  Players : [0, 0, 0, 0, 0, 0, 0, 0], // TILE PLAYER IS ON
   Board: createBoardCoordinateGrid(window.innerHeight)
 };
 

@@ -18,3 +18,5 @@ interface TileCoordInfo {
   y: number,
   info: TileInfo
 }
+
+type GamePhases = 'FIRST ROLL' | 'PLAYING' | 'WAITING';
