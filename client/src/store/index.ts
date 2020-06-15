@@ -1,17 +1,23 @@
-import { createReducer, createAction, configureStore } from '@reduxjs/toolkit';
+import { createReducer, configureStore } from '@reduxjs/toolkit';
 import { createBoardCoordinateGrid } from './board';
+import { updateSize, movePlayer } from './actions';
 
 const initialState = {
   Size: window.innerHeight,
   Width: window.innerHeight * .082,
   Height: window.innerHeight * .13,
-  Players : [0, 0, 0, 0, 0, 0, 0, 0], // TILE PLAYER IS ON
+  Players : [
+    { currentTile: 0, move: 0 }, 
+    { currentTile: 0, move: 0 },
+    { currentTile: 0, move: 0 },
+    { currentTile: 0, move: 0 },
+    { currentTile: 0, move: 0 },
+    { currentTile: 0, move: 0 },
+    { currentTile: 0, move: 0 },
+    { currentTile: 0, move: 0 },
+  ], // TILE PLAYER IS ON
   Board: createBoardCoordinateGrid(window.innerHeight)
 };
-
-export const updateSize = createAction('size/update', (newSize: number) => {
-  return { payload: { newSize } }
-});
 
 const reducer = createReducer(initialState, {
   [updateSize.type]: (state, action: ReturnType<typeof updateSize>) => {
@@ -21,8 +27,14 @@ const reducer = createReducer(initialState, {
     newState.Height = action.payload.newSize * .13;
     newState.Board = createBoardCoordinateGrid(action.payload.newSize);
     return newState;
+  },
+  [movePlayer.type]: (state, action: ReturnType<typeof movePlayer>) => {
+    const newState = {...state};
+    newState.Players[action.payload.player - 1].move -= 1;
+    newState.Players[action.payload.player - 1].currentTile = action.payload.newTile
   }
 });
 
 export type State = typeof initialState;
 export const store = configureStore({ reducer });
+export * from './actions';

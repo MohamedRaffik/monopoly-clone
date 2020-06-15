@@ -16,6 +16,8 @@ interface TileInfo {
 interface TileCoordInfo {
   x: number,
   y: number,
+  width: number,
+  height: number,
   info: TileInfo
 }
 

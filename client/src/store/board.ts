@@ -47,6 +47,8 @@ export const createBoardCoordinateGrid = (Size: number) => {
     board.push({ 
       x: (Size * .131) + (i * Size * .082), 
       y: Size - (Size * .131), 
+      width: board.length % 10 === 0 ? Size * .13 : Size * .082,
+      height: Size * .13,
       info: BoardInfo[board.length] 
     });
   }
@@ -55,6 +57,8 @@ export const createBoardCoordinateGrid = (Size: number) => {
     board.push({ 
       x: 0, 
       y: (Size * .131) + (i * Size * .082), 
+      width: Size * .13,
+      height: board.length % 10 === 0 ? Size * .13 : Size * .082,
       info: BoardInfo[board.length] 
     });
   }
@@ -62,12 +66,16 @@ export const createBoardCoordinateGrid = (Size: number) => {
   board.push({ 
     x: 0, 
     y: 0,
+    width: Size * .13,
+    height: Size * .13,
     info: BoardInfo[board.length]
   });
   for (let i = 0; i < 9; i++) {
     board.push({ 
       x: (Size * .131) + (i * Size * .082), 
       y: 0,
+      width: Size * .082,
+      height: Size * .13,
       info: BoardInfo[board.length] 
     });
   }
@@ -75,12 +83,16 @@ export const createBoardCoordinateGrid = (Size: number) => {
   board.push({ 
     x: Size - (Size * .131), 
     y: 0,
+    width: Size * .13,
+    height: Size * .13,
     info: BoardInfo[board.length] 
   });
   for (let i = 0; i < 9; i++) {
     board.push({ 
       x: Size - (Size * .131), 
       y: (Size * .131) + (i * Size * .082),
+      width: Size * .13,
+      height: board.length % 10 === 0 ? Size * .13 : Size * .082,
       info: BoardInfo[board.length] 
     });
   }
