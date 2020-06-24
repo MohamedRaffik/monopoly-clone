@@ -98,3 +98,17 @@ export const createBoardCoordinateGrid = (Size: number) => {
   }
   return board;
 }
+
+interface PlayerInfo {
+  currentTile: number,
+  move: number,
+  phase: PlayerPhases
+}
+
+export const createPlayers = () => {
+  const a: PlayerInfo[] = [];
+  for (let i = 0; i < 8; i++) {
+    a.push({ currentTile: 0, move: 0, phase: 'WAITING' })
+  }
+  return a;
+}

@@ -6,8 +6,6 @@ from starlette.routing import WebSocketRoute, Route
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from app.msghandler import MessageHandler
-from google.cloud import pubsub_v1
-from google.api_core.exceptions import NotFound
 import os
 
 async def websocket_route(websocket: WebSocket):
@@ -19,17 +17,6 @@ async def index(request: Request):
     return JSONResponse({ 'message': 'HELLO FROM API' })
 
 def create_app():
-
-    publisher = pubsub_v1.PublisherClient()
-    topic_path = publisher.topic_path(os.environ.get('PUBSUB_PROJECT_ID'), 'mc-rooms')
-
-    try:
-        publisher.get_topic(topic_path)
-    except NotFound:
-        publisher.create_topic(topic_path)
-    finally:
-        print('ROOMS TOPIC CREATED')
-
     return Starlette(
         routes=[
             Route(endpoint=index, path='/', methods=['GET']),

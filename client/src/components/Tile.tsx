@@ -34,9 +34,8 @@ export const Tile = (props: TileProps) => {
   );
 };
 
-interface PropertyTileProps {
+interface PropertyTileProps extends TileProps {
   color?: string;
-  tileID: number;
   propertyName?: string;
 }
 
@@ -68,8 +67,7 @@ export const PropertyTile = (props: PropertyTileProps) => {
   );
 };
 
-interface RailRoadTileProps {
-  tileID: number;
+interface RailRoadTileProps extends TileProps {
   direction?: Direction;
   railroadName?: string;
 }
@@ -102,8 +100,7 @@ export const RailRoadTile = (props: RailRoadTileProps) => {
   );
 };
 
-interface UtilityTileProps {
-  tileID: number;
+interface UtilityTileProps extends TileProps {
   direction?: Direction;
   utilityName?: string;
   image?: number;
@@ -137,8 +134,7 @@ export const UtilityTile = (props: UtilityTileProps) => {
   );
 };
 
-interface ChanceTileProps {
-  tileID: number;
+interface ChanceTileProps extends TileProps {
   direction?: Direction;
 }
 
@@ -163,8 +159,7 @@ export const ChanceTile = (props: ChanceTileProps) => {
   );
 };
 
-interface CommunityChestTileProps {
-  tileID: number;
+interface CommunityChestTileProps extends TileProps {
   direction?: Direction;
 }
 
@@ -195,8 +190,7 @@ export const CommunityChestTile = (props: CommunityChestTileProps) => {
   );
 };
 
-interface TaxTileProps {
-  tileID: number;
+interface TaxTileProps extends TileProps {
   direction?: Direction;
   taxName?: string;
   image?: number;
@@ -230,11 +224,7 @@ export const TaxTile = (props: TaxTileProps) => {
   );
 };
 
-interface FreeParkingTileProps {
-  tileID: number;
-}
-
-export const FreeParkingTile = (props: FreeParkingTileProps) => {
+export const FreeParkingTile = (props: TileProps) => {
   const { Width, Height } = useSelector((state: State) => ({
     Width: state.Height,
     Height: state.Height
@@ -249,11 +239,7 @@ export const FreeParkingTile = (props: FreeParkingTileProps) => {
   );
 };
 
-interface GoToJailTileProps {
-  tileID: number;
-}
-
-export const GoToJailTile = (props: GoToJailTileProps) => {
+export const GoToJailTile = (props: TileProps) => {
   const { Width, Height } = useSelector((state: State) => ({
     Width: state.Height,
     Height: state.Height
@@ -268,11 +254,7 @@ export const GoToJailTile = (props: GoToJailTileProps) => {
   );
 };
 
-interface GoTileProps {
-  tileID: number;
-}
-
-export const GoTile = (props: GoTileProps) => {
+export const GoTile = (props: TileProps) => {
   const { Width, Height } = useSelector((state: State) => ({
     Width: state.Height,
     Height: state.Height
@@ -287,11 +269,7 @@ export const GoTile = (props: GoTileProps) => {
   );
 };
 
-interface JailTileProps {
-  tileID: number;
-}
-
-export const JailTile = (props: JailTileProps) => {
+export const JailTile = (props: TileProps) => {
   return (
     <Tile tileID={props.tileID}>
       <text x={'50%'} y={'20%'} textAnchor={'middle'}>JAIL</text>

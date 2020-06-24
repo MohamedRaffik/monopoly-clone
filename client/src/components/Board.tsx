@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { State, updateSize, movePlayer } from  '../store';
+import { State, updateSize, movePlayer, changePlayerPhase } from  '../store';
 import { PropertyTile, RailRoadTile, UtilityTile, ChanceTile, CommunityChestTile, TaxTile, FreeParkingTile, GoToJailTile, GoTile, JailTile } from './Tile';
 
 const resolveComponent = (TileInfo: TileCoordInfo, key: number) => {
@@ -45,6 +45,9 @@ const Board = () => {
   }
 
   const animatePlayerMove = (player: number, tiles: number) => {    
+    if (Players[player - 1].phase === 'MOVING') return;
+    dispatch(changePlayerPhase(player, 'MOVING'));
+    
     const playerElement = document.getElementById(`player${player}`) as unknown as SVGRectElement;
     let currentTile = Players[player - 1].currentTile;
 
@@ -62,15 +65,16 @@ const Board = () => {
         { transform: 'translate(0, 0)' }, 
         { transform: `translate(${newCoord.x - curX}px, ${newCoord.y - curY}px)` }
       ], { duration: 250 });
-      
       a.addEventListener('finish', () => {
         playerElement.setAttribute('x', (newCoord.x).toString());
         playerElement.setAttribute('y', (newCoord.y).toString());
         currentTile = (currentTile + 1) % 40;
         moveOneTile(tilesRemaining - 1);
+        // console.log('MOVING PLAYER', player);
       });
     }
     moveOneTile(tiles);
+    console.log(tiles);
   }
 
   useEffect(() => {
